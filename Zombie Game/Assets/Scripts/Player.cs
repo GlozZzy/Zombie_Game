@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public Transform gunBarrelIn;
     public AudioSource shotSound;
     public AudioSource deathSound;
+    public AudioSource FootstepSound;
 
     CapsuleCollider capsuleCollider;
     Animator animator;
@@ -56,7 +57,6 @@ public class Player : MonoBehaviour
             health = 0;
             Kill();
         }
-
 
         Vector3 dir = Vector3.zero;
         bool bW = (Input.GetKey(KeyCode.W) ? true : false);
@@ -105,6 +105,9 @@ public class Player : MonoBehaviour
             dir.x = 0.0f;
         }
         navMeshAgent.velocity = dir.normalized * moveSpeed;
+        if (dir.magnitude > 0) 
+            if (!FootstepSound.isPlaying) FootstepSound.Play();
+
 
         Vector3 forward = cursor.transform.position - transform.position;
         transform.rotation = Quaternion.LookRotation(new Vector3(forward.x, 0, forward.z));
