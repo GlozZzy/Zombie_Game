@@ -14,6 +14,8 @@ public class Zombie : MonoBehaviour
     public float atackrange;
     public float atackspeed;
     public AudioSource deathSound;
+    public ParticleSystem particleSystemKill;
+    public ParticleSystem particleSystemDamage;
 
     CapsuleCollider capsuleCollider;
     Animator animator;
@@ -72,6 +74,8 @@ public class Zombie : MonoBehaviour
         if (!dead)
         {
             health -= 1;
+            particleSystemDamage.Play();
+
         }
     }
 
@@ -87,7 +91,7 @@ public class Zombie : MonoBehaviour
             Destroy(navMeshAgent);
             Destroy(gameObject, 5.0f);
             animator.SetTrigger("died");
-            GetComponentInChildren<ParticleSystem>().Play();
+            particleSystemKill.Play();
         }
     }
 }
