@@ -57,7 +57,7 @@ public class Zombie : MonoBehaviour
         var dist = player.transform.position - transform.position;
         if (dist.magnitude <= atackrange && stuned == 0.0f)
         {
-            player.health -= damage;
+            player.Damage(damage);
             animator.SetTrigger("atack");
             stuned = atackspeed * 25;
             MS = 0.1f;

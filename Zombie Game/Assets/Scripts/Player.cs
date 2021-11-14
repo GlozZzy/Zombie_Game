@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public Transform gunBarrelIn;
     public AudioSource shotSound;
     public AudioSource deathSound;
+    public AudioSource damageSound;
     public AudioSource FootstepSound;
 
     CapsuleCollider capsuleCollider;
@@ -50,12 +51,6 @@ public class Player : MonoBehaviour
                 Destroy(gameObject);
             }
             return;
-        }
-
-        if (health <= 0)
-        {
-            health = 0;
-            Kill();
         }
 
         Vector3 dir = Vector3.zero;
@@ -135,6 +130,21 @@ public class Player : MonoBehaviour
             shotSound.Play();
             shot.Show(from, to);
             ammo--;
+        }
+    }
+
+
+    public void Damage(int dmg)
+    {
+        if (health > 0)
+        {
+            health -= dmg;
+            damageSound.Play();
+            if (health <= 0)
+            {
+                health = 0;
+                Kill();
+            }
         }
     }
 
