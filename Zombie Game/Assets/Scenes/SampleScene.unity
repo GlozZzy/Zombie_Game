@@ -48340,6 +48340,7 @@ MonoBehaviour:
   deathSound: {fileID: 1427768371}
   damageSound: {fileID: 1471725527}
   FootstepSound: {fileID: 647649910}
+  attackspeed: 0.2
 --- !u!195 &1648808284
 NavMeshAgent:
   m_ObjectHideFlags: 0

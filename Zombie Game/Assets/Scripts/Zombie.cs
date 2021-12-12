@@ -50,17 +50,13 @@ public class Zombie : MonoBehaviour
             return;
         }
 
-        if (stuned > 0.0f)
-            stuned -= 1;
-        else MS = moveSpeed;
-
         var dist = player.transform.position - transform.position;
         if (dist.magnitude <= atackrange && stuned == 0.0f)
         {
             player.Damage(damage);
             animator.SetTrigger("atack");
             stuned = atackspeed * 25;
-            MS = 0.1f;
+            MS = 0.01f;
         }
         navMeshAgent.SetDestination(player.transform.position);
         navMeshAgent.speed = MS;
@@ -68,6 +64,15 @@ public class Zombie : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(new Vector3(arr[0], 0, arr[2])); 
     }
 
+    void FixedUpdate()
+    {
+        if (PauseMenu.GameIsPaused) return;
+        if (dead) return;
+
+        if (stuned > 0.0f)
+            stuned -= 1;
+        else MS = moveSpeed;
+    }
 
     public void Damage()
     {

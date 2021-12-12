@@ -17,15 +17,18 @@ public class Player : MonoBehaviour
     public AudioSource deathSound;
     public AudioSource damageSound;
     public AudioSource FootstepSound;
+    public float attackspeed;
 
     CapsuleCollider capsuleCollider;
     Animator animator;
     MovementAnimator movementAnimator;
     float dead;
+    float attackstun;
 
     // Start is called before the first frame update
     void Start()
     {
+        attackstun = 0;
         dead = 0;
         navMeshAgent = GetComponent<NavMeshAgent>();
         cursor = FindObjectOfType<Cursor>();
@@ -100,15 +103,17 @@ public class Player : MonoBehaviour
             dir.x = 0.0f;
         }
         navMeshAgent.velocity = dir.normalized * moveSpeed;
-        if (dir.magnitude > 0) 
+        if (dir.magnitude > 0)
             if (!FootstepSound.isPlaying) FootstepSound.Play();
 
 
         Vector3 forward = cursor.transform.position - transform.position;
         transform.rotation = Quaternion.LookRotation(new Vector3(forward.x, 0, forward.z));
 
-        if (Input.GetMouseButtonDown(0) && (ammo > 0))
+        if (attackstun > 0) attackstun -= Time.deltaTime;
+        if (Input.GetMouseButton(0) && (ammo > 0) && attackstun <= 0)
         {
+            attackstun = attackspeed;
             var from = gunBarrelIn.position;
             var to = gunBarrelOut.position;
             var direction = (to - from).normalized;
